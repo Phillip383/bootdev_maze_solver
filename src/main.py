@@ -9,7 +9,7 @@ def main():
 
     cell = Cell(Vector2(100, 100), Vector2(300, 300), win)
     cell.has_right_wall = False
-    cell2 = Cell(Vector2(400, 100), Vector2(600, 300), win)
+    cell2 = Cell(Vector2(300, 100), Vector2(600, 300), win)
     cell2.has_left_wall = False
     cell.draw()
     cell2.draw()
