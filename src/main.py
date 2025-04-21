@@ -1,9 +1,12 @@
-from window import Window
+from cell import Cell
 from line import Line
 from vector2 import Vector2
-from cell import Cell
+from window import Window
+
 
 def main():
+
+
 
     win = Window(1920, 1080)
 
@@ -20,11 +23,6 @@ def main():
 
 
     win.wait_for_close()
-
-
-
-
-
 
 
 
