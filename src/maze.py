@@ -1,9 +1,11 @@
+import time
+
 from cell import Cell
 from vector2 import Vector2
-import time
 
 
 class Maze():
+
     def __init__(
         self,
         x1,
@@ -12,7 +14,7 @@ class Maze():
         num_cols,
         cell_size_x,
         cell_size_y,
-        win,
+        win=None,
     ):
         self.__x1 = x1
         self.__y1 = y1
@@ -24,6 +26,9 @@ class Maze():
         self.__cells = []
         self.__create_cells()
     
+    def get_cells(self):
+        return self.__cells
+
     def __create_cells(self):
         for column in range(self.__num_cols):
             temp = []
@@ -37,14 +42,16 @@ class Maze():
 
 
     def _draw_cell(self, i, j):
-        x_pos = self.__x1 + (j * self.__cell_size_x)
-        y_pos = self.__y1 + (i * self.__cell_size_y)
-        start = Vector2(x_pos, y_pos)
-        end = Vector2(x_pos + self.__cell_size_x, y_pos + self.__cell_size_y)
-        
-        self.__cells[i][j].draw(start, end)
-        self._animate()
+        if self.__win:
+            x_pos = self.__x1 + (j * self.__cell_size_x)
+            y_pos = self.__y1 + (i * self.__cell_size_y)
+            start = Vector2(x_pos, y_pos)
+            end = Vector2(x_pos + self.__cell_size_x, y_pos + self.__cell_size_y)
+            
+            self.__cells[i][j].draw(start, end)
+            self._animate()
     
     def _animate(self):
-        self.__win.redraw()
-        time.sleep(0.05)
+        if self.__win:
+            self.__win.redraw()
+            time.sleep(0.05)

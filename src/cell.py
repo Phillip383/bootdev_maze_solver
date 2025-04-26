@@ -1,9 +1,15 @@
-from window import Window
-from vector2 import Vector2
 from line import Line
+from vector2 import Vector2
+from window import Window
+
 
 class Cell():
-    def __init__(self, window: Window, top_left: Vector2=None, bottom_right: Vector2=None):
+
+
+
+
+
+    def __init__(self, window: Window):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -14,8 +20,7 @@ class Cell():
         self._y2 = None
         self._win = window
 
-    def draw(self, top_left: Vector2 = None, bottom_right: Vector2 = None):
-        
+    def draw(self, top_left: Vector2, bottom_right: Vector2):
         if self.has_left_wall:
             self._win.draw_line(Line(Vector2(top_left.x, top_left.y), Vector2(top_left.x, bottom_right.y)), "black")
         if self.has_right_wall:
