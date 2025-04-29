@@ -34,9 +34,9 @@ class Maze():
         return self.__cells
 
     def __create_cells(self):
-        for column in range(self.__num_cols):
+        for row in range(self.__num_rows):
             temp = []
-            for row in range(self.__num_rows):
+            for column in range(self.__num_cols):
                 cell = Cell(self.__win) #type: ignore
                 # if its the first cell create entrance
                 if column == 0 and row == 0:
@@ -48,6 +48,7 @@ class Maze():
             self.__cells.append(temp)
         
         self._break_walls_r(0, 0)
+        self._reset_cells_visited()
         
         for i in range(len(self.__cells)):
             for j in range(len(self.__cells[i])):
@@ -107,3 +108,8 @@ class Maze():
         if self.__win:
             self.__win.redraw()
             time.sleep(0.05)
+
+    def _reset_cells_visited(self):
+        for i in range(len(self.__cells)):
+            for j in range(len(self.__cells[i])):
+                self.__cells[i][j].visited = False
