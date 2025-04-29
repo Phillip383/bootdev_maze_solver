@@ -6,10 +6,8 @@ from window import Window
 class Cell():
 
 
-
-
-
     def __init__(self, window: Window):
+        self.visited = False
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
