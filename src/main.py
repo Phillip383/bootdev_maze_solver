@@ -7,8 +7,9 @@ def main():
 
     win = Window(1920, 1080)
 
-    Maze(3, 3, 10, 10, 100, 100, win, time.time())
-
+    maze = Maze(3, 3, 10, 10, 100, 100, win, time.time())
+    maze.solve()
+    
     win.wait_for_close()
 
 

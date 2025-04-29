@@ -31,11 +31,17 @@ class Cell():
     def draw_move(self, to_cell, undo=False):
         color = "red" if not undo else "gray"
         start = Vector2(
-            abs(self._x1 - self._x2),
-            abs(self._y1 - self._y2)
+            (self._x1 + self._x2) / 2,
+            (self._y1 + self._y2) / 2
         )
         end = Vector2(
-            abs((to_cell._x1 - to_cell._x2)) + abs(self._x2 - self._x1) + abs(self._x2 - to_cell._x1),
-            abs((to_cell._y1 - to_cell._y2))
+            (to_cell._x1 + to_cell._x2) / 2,
+            (to_cell._y1 + to_cell._y2) / 2
         )
         self._win.draw_line(Line(start, end), color)
+
+    def set_position(self, top_left: Vector2, bottom_right: Vector2):
+        self._x1 = top_left.x
+        self._y1 = top_left.y
+        self._x2 = bottom_right.x
+        self._y2 = bottom_right.y

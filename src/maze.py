@@ -93,14 +93,14 @@ class Maze():
 
             self._break_walls_r(ran_r, ran_c)
 
-
     def _draw_cell(self, i, j):
         if self.__win:
             x_pos = self.__x1 + (j * self.__cell_size_x)
             y_pos = self.__y1 + (i * self.__cell_size_y)
             start = Vector2(x_pos, y_pos)
             end = Vector2(x_pos + self.__cell_size_x, y_pos + self.__cell_size_y)
-
+            
+            self.__cells[i][j].set_position(start, end)
             self.__cells[i][j].draw(start, end)
             self._animate()
     
@@ -113,3 +113,46 @@ class Maze():
         for i in range(len(self.__cells)):
             for j in range(len(self.__cells[i])):
                 self.__cells[i][j].visited = False
+
+    def solve(self):
+        return self._solve_r(0, 0)
+
+    def _solve_r(self, i, j):
+        directions = {"up" : (-1, 0), "down" : (1, 0), "left" : (0, -1), "right" : (0, 1)}
+        current_cell = self.__cells[i][j]
+        self._animate()
+        current_cell.visited = True
+        # if the current cell is the end cell then return True
+        if i == self.__num_rows - 1 and j == self.__num_cols - 1:
+            return True
+        
+        for key in directions.keys():
+            dir_r = i + directions[key][0]
+            dir_c = j + directions[key][1]
+            if 0 <= dir_r <= self.__num_rows - 1 and 0 <= dir_c <= self.__num_cols - 1:
+                next_cell = self.__cells[dir_r][dir_c]
+                if next_cell.visited is False and self.__has_clear_path(current_cell, next_cell, key):
+                    next_cell.visited = True
+                    current_cell.draw_move(next_cell)
+                    if self._solve_r(dir_r, dir_c):
+                        return True
+                    else:
+                        next_cell.visited = False
+                        current_cell.draw_move(next_cell, True)
+        
+        current_cell.visited = False
+        return False
+                   
+    
+    def __has_clear_path(self, cell, next_cell, direction) -> bool:
+         match direction:
+            case "up":
+                return cell.has_top_wall is False and next_cell.has_bottom_wall is False
+            case "down":
+                return cell.has_bottom_wall is False and next_cell.has_top_wall is False
+            case "left":
+                return cell.has_left_wall is False and next_cell.has_right_wall is False
+            case "right":
+                return cell.has_right_wall is False and next_cell.has_left_wall is False
+            case _:
+                 return False
