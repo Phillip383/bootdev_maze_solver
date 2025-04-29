@@ -1,3 +1,4 @@
+import time
 from maze import Maze
 from window import Window
 
@@ -6,7 +7,7 @@ def main():
 
     win = Window(1920, 1080)
 
-    Maze(0, 0, 10, 10, 100, 100, win)
+    Maze(3, 3, 10, 10, 100, 100, win, time.time())
 
     win.wait_for_close()
 
